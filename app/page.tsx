@@ -14,6 +14,28 @@ interface FocusSession {
 }
 
 export default async function Home() {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-gray-100 flex items-center justify-center px-4">
+        <div className="max-w-2xl text-center">
+          <h1 className="text-4xl font-bold text-orange-500 mb-4">⏱️ Focus Graveyard</h1>
+          <h2 className="text-2xl font-bold mb-4">Setup Required</h2>
+          <p className="text-gray-400 mb-6">
+            This app needs a Supabase database to work. Add these environment variables to Vercel:
+          </p>
+          <div className="bg-gray-800 p-6 rounded-lg text-left mb-6">
+            <p className="font-mono text-sm text-gray-300">NEXT_PUBLIC_SUPABASE_URL=your-project-url</p>
+            <p className="font-mono text-sm text-gray-300">NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key</p>
+          </div>
+          <p className="text-sm text-gray-500">
+            See README.md for full setup instructions
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   const supabase = await createClient()
   
   const { data: sessions } = await supabase
